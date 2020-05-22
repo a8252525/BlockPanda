@@ -2,7 +2,9 @@
 
 using namespace eosio;
 
-class [[eosio::contract("blockpanda")]] blockpanda : public eosio::contract {
+// This will bind the contract to 'blockpanda' account
+//class [[eosio::contract("blockpanda")]] blockpanda : public eosio::contract {
+class [[eosio::contract]] blockpanda : public eosio::contract {
 
 public:
 
@@ -73,3 +75,5 @@ private:
   typedef eosio::multi_index<"people"_n, person> temp_index;
 
 };    
+
+//name format : https://github.com/EOSIO/eos/issues/2699#issuecomment-385853668
