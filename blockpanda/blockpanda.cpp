@@ -36,21 +36,17 @@ public:
   //   }
   }
 
-  // [[eosio::action]]
-  // void upsert2(name txid, std::string last_name) {
-  //   require_auth( txid );
-  //   temp_index addresses( get_self(), get_first_receiver().value );
-  //   auto iterator = addresses.find(txid.value);
+  [[eosio::action]]
+  void rc2rw(name txid, name r_cook, std::string temp_rc) {
+    require_auth( r_cook );
+    temp_index addresses( get_self(), get_first_receiver().value );
+    auto iterator = addresses.find(txid.value);
 
-  //     addresses.modify(iterator, txid, [&]( auto& row ) {
-  //      row.txid = txid;
-  //      row.last_name = last_name;
-  //     //  row.last_
-  //     //  row.stree
-  //     //  row.city
-  //     //  row.state
-  //     });
-  // }
+      addresses.modify(iterator, r_cook, [&]( auto& row ) {
+       row.r_cook = r_cook;
+       row.temp_rc = temp_rc; 
+      });
+  }
   
   [[eosio::action]]
   void erase(name txid) {
@@ -65,12 +61,13 @@ public:
 
 private:
   struct [[eosio::table]] person {
-    name txid;
-    name customer;
-    std::string temp_cus;
-    // std::string street;
-    // std::string city;
-    // std::string state;
+     name txid;
+     name customer;
+     std::string temp_cus;
+     name r_cook;
+     std::string temp_rc;
+    //  std::string city;
+    //  std::string state;
     uint64_t primary_key() const { return txid.value; }
   };
   typedef eosio::multi_index<"people"_n, person> temp_index;
