@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cleos wallet unlock --password PW5J7aqcuSyZCc2oDy34mYmZFgGhchJgyFdmM39Zoib6hn63BXPXY
+cleos wallet unlock --password $(cat wallet_pass.txt)
 eosio-cpp blockpanda.cpp -o blockpanda.wasm
 echo "Setting contract"
 cleos set contract blockpanda ../blockpanda/ -p blockpanda@active

@@ -1,0 +1,4 @@
+libeospy==2.0.1
+PyQt5==5.14.0
+matplotlib
+numpys
