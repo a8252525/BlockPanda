@@ -1,4 +1,6 @@
 libeospy==2.0.1
 PyQt5==5.14.0
+opencv-python==4.1.2.30
+
 matplotlib
-numpys
+numpy
