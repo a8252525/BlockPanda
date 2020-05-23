@@ -1,4 +1,5 @@
 #include <eosio/eosio.hpp>
+#include <eosio/system.hpp>
 
 using namespace eosio;
 
@@ -11,7 +12,7 @@ public:
   blockpanda(name receiver, name code,  datastream<const char*> ds): contract(receiver, code, ds) {}
 
   [[eosio::action]]
-  void c2r(name txid, name customer, std::string temp_cus) {
+  void c2r(name txid, name customer, std::string temp_cus, std::string time_c) {
     require_auth( customer );
     temp_index addresses( get_self(), get_first_receiver().value );
     auto iterator = addresses.find(txid.value);
@@ -21,56 +22,48 @@ public:
        row.txid = txid;
        row.customer = customer;
        row.temp_cus = temp_cus;
-      //  row.street = street;
-      //  row.city = city;
-      //  row.state = state;
+       row.time_c = time_c;
       });
     }
-  //   else {
-  //     addresses.modify(iterator, user, [&]( auto& row ) {
-  //       row.key = user;
-  //       row.first_name = first_name;
-  //       row.last_name = last_name;
-  //       row.street = street;
-  //       row.city = city;
-  //       row.state = state;
-  //     });
-  //   }
+
   }
 
   [[eosio::action]]
-  void rc2rw(name txid, name r_cook, std::string temp_rc) {
+  void rc2rw(name txid, name r_cook, std::string temp_rc, std::string time_rc) {
     require_auth( r_cook );
     temp_index addresses( get_self(), get_first_receiver().value );
     auto iterator = addresses.find(txid.value);
 
       addresses.modify(iterator, r_cook, [&]( auto& row ) {
        row.r_cook = r_cook;
-       row.temp_rc = temp_rc; 
+       row.temp_rc = temp_rc;
+       row.time_rc = time_rc;
       });
   }
 
   [[eosio::action]]
-  void rw2de(name txid, name r_w, std::string temp_rw) {
+  void rw2de(name txid, name r_w, std::string temp_rw, std::string time_rw) {
     require_auth( r_w );
     temp_index addresses( get_self(), get_first_receiver().value );
     auto iterator = addresses.find(txid.value);
 
       addresses.modify(iterator, r_w, [&]( auto& row ) {
        row.r_w = r_w;
-       row.temp_rw = temp_rw; 
+       row.temp_rw = temp_rw;
+       row.time_rw = time_rw;
       });
   }
 
   [[eosio::action]]
-  void de2c(name txid, name de, std::string temp_de) {
+  void de2c(name txid, name de, std::string temp_de, std::string time_de) {
     require_auth( de );
     temp_index addresses( get_self(), get_first_receiver().value );
     auto iterator = addresses.find(txid.value);
 
       addresses.modify(iterator, de, [&]( auto& row ) {
        row.de = de;
-       row.temp_de = temp_de; 
+       row.temp_de = temp_de;
+       row.time_de = time_de;
       });
   }  
 
@@ -90,12 +83,16 @@ private:
      name txid;
      name customer;
      std::string temp_cus;
+     std::string time_c;
      name r_cook;
      std::string temp_rc;
+     std::string time_rc;
      name r_w;
      std::string temp_rw;
+     std::string time_rw;
      name de;
      std::string temp_de;
+     std::string time_de;
 
     uint64_t primary_key() const { return txid.value; }
   };
