@@ -12,10 +12,10 @@ public:
   blockpanda(name receiver, name code,  datastream<const char*> ds): contract(receiver, code, ds) {}
 
   [[eosio::action]]
-  void c2r(name txid, name customer, std::string temp_cus, std::string time_c) {
+  void c2r(uint64_t txid, name customer, std::string temp_cus, std::string time_c) {
     require_auth( customer );
     temp_index addresses( get_self(), get_first_receiver().value );
-    auto iterator = addresses.find(txid.value);
+    auto iterator = addresses.find(txid);
     if( iterator == addresses.end() )
     {
       addresses.emplace(customer, [&]( auto& row ) {
@@ -29,10 +29,10 @@ public:
   }
 
   [[eosio::action]]
-  void rc2rw(name txid, name r_cook, std::string temp_rc, std::string time_rc) {
+  void rc2rw(uint64_t txid, name r_cook, std::string temp_rc, std::string time_rc) {
     require_auth( r_cook );
     temp_index addresses( get_self(), get_first_receiver().value );
-    auto iterator = addresses.find(txid.value);
+    auto iterator = addresses.find(txid);
 
       addresses.modify(iterator, r_cook, [&]( auto& row ) {
        row.r_cook = r_cook;
@@ -42,10 +42,10 @@ public:
   }
 
   [[eosio::action]]
-  void rw2de(name txid, name r_w, std::string temp_rw, std::string time_rw) {
+  void rw2de(uint64_t txid, name r_w, std::string temp_rw, std::string time_rw) {
     require_auth( r_w );
     temp_index addresses( get_self(), get_first_receiver().value );
-    auto iterator = addresses.find(txid.value);
+    auto iterator = addresses.find(txid);
 
       addresses.modify(iterator, r_w, [&]( auto& row ) {
        row.r_w = r_w;
@@ -55,10 +55,10 @@ public:
   }
 
   [[eosio::action]]
-  void de2c(name txid, name de, std::string temp_de, std::string time_de) {
+  void de2c(uint64_t txid, name de, std::string temp_de, std::string time_de) {
     require_auth( de );
     temp_index addresses( get_self(), get_first_receiver().value );
-    auto iterator = addresses.find(txid.value);
+    auto iterator = addresses.find(txid);
 
       addresses.modify(iterator, de, [&]( auto& row ) {
        row.de = de;
@@ -68,19 +68,19 @@ public:
   }  
 
   [[eosio::action]]
-  void erase(name txid) {
+  void erase(uint64_t txid) {
     //require_auth(txid);
 
     temp_index addresses( get_self(), get_first_receiver().value);
 
-    auto iterator = addresses.find(txid.value);
+    auto iterator = addresses.find(txid);
     check(iterator != addresses.end(), "Record does not exist");
     addresses.erase(iterator);
   }
 
 private:
   struct [[eosio::table]] person {
-     name txid;
+     uint64_t txid;
      name customer;
      std::string temp_cus;
      std::string time_c;
@@ -94,7 +94,7 @@ private:
      std::string temp_de;
      std::string time_de;
 
-    uint64_t primary_key() const { return txid.value; }
+    uint64_t primary_key() const { return txid; }
   };
   typedef eosio::multi_index<"people"_n, person> temp_index;
 
