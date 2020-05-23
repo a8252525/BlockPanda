@@ -49,7 +49,31 @@ public:
        row.temp_rc = temp_rc; 
       });
   }
-  
+
+  [[eosio::action]]
+  void rw2de(name txid, name r_w, std::string temp_rw) {
+    require_auth( r_w );
+    temp_index addresses( get_self(), get_first_receiver().value );
+    auto iterator = addresses.find(txid.value);
+
+      addresses.modify(iterator, r_w, [&]( auto& row ) {
+       row.r_w = r_w;
+       row.temp_rw = temp_rw; 
+      });
+  }
+
+  [[eosio::action]]
+  void de2c(name txid, name de, std::string temp_de) {
+    require_auth( de );
+    temp_index addresses( get_self(), get_first_receiver().value );
+    auto iterator = addresses.find(txid.value);
+
+      addresses.modify(iterator, de, [&]( auto& row ) {
+       row.de = de;
+       row.temp_de = temp_de; 
+      });
+  }  
+
   [[eosio::action]]
   void erase(name txid) {
     //require_auth(txid);
@@ -68,8 +92,11 @@ private:
      std::string temp_cus;
      name r_cook;
      std::string temp_rc;
-    //  std::string city;
-    //  std::string state;
+     name r_w;
+     std::string temp_rw;
+     name de;
+     std::string temp_de;
+
     uint64_t primary_key() const { return txid.value; }
   };
   typedef eosio::multi_index<"people"_n, person> temp_index;
@@ -77,3 +104,4 @@ private:
 };    
 
 //name format : https://github.com/EOSIO/eos/issues/2699#issuecomment-385853668
+

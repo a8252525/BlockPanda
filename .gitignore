@@ -1,5 +1,7 @@
 *.abi
 *.wasm
+wallet_pass.txt
+
 
 .DS_Store
 .AppleDouble
