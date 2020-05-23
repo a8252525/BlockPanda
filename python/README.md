@@ -8,3 +8,12 @@
 pip install -r requirements.txt
 ```
 
+## RUN
+
+```sheel=
+pip install -r requirements.txt
+```
+
+
+![image](../images/ui1.png)
+
