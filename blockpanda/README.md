@@ -22,9 +22,13 @@ cleos push action "account you deploy the contract" "action" '["transaction ID",
 The account in the json([]) need to be the same as the one you use the permission(the account after the -p).
 There are four action, c2r, rc2rw, rw2de and de2c, in this blockpanda contract. 
 We get wired action name here since the number of action name need to be less than 12.
+
 c2r: when customer upload the information contain the temperature of his own. This action will cause when customer send an order to the restaurant.
+
 rc2rw: Send the action when the cook pass the stuff to the waiters. Upload with the temperature of the cook.
+
 rw2de: Send this action when waiters give the stuff to the delivery man. Upload the temperature of the waiter.
+
 de2c: Send this action when delivery man give the stuff to the customer. Upload the temperature of the delivery man. We don't need the temperature of customer since we have it in the c2r action.
 
 You have to push action of c2r
