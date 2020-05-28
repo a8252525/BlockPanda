@@ -24,6 +24,7 @@ The account in the json(inside []) need to be the same as the one you use the pe
 There are four action, **c2r, rc2rw, rw2de and de2c**, in this blockpanda contract. 
 We get wired action name here since the number of action name need to be less than 12.
 
+#### action
 **c2r**: when customer upload the information contain the temperature of his own. This action will cause when customer send an order to the restaurant.
 
 **rc2rw**: Send the action when the cook pass the stuff to the waiters. Upload with the temperature of the cook.
@@ -36,13 +37,14 @@ We get wired action name here since the number of action name need to be less th
 
 After all the data uploading, we need to get it back with **"get table"**
 ```
-cleos get table "account you deploy the contract" "scope: also the account you deploy the contract" people
+cleos get table "account you deploy the contract" "scope: also be the account you deploy the contract" people
 ```
 The **scope** of all the action in this blockpanda contract are all set to be the account you deploy the contract. 
 You can management the scope of getting table, but we didn't set it. If you want to know more about the "scope", you can learn some information [here](https://eosio.stackexchange.com/questions/3534/scope-in-the-get-table-command) and [eosio.token](https://github.com/EOSIO/eosio.contracts/tree/master/contracts/eosio.token)
 
 *people* is the table name we define in the smart contract.
 
+## get table
 Finally, you get the information like this
 ```
 {
