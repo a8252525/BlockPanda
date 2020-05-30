@@ -14,8 +14,5 @@ pip install -r requirements.txt
 pip install -r requirements.txt
 ```
 
-
-![image](../images/ui1.png)
-
 <img src=../images/demo_node.gif/>
 
