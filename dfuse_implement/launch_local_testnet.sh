@@ -6,4 +6,5 @@ set_local_testnet(){
 
 
 read -p "Press [Enter] set start local testnet..."
+sleep 1
 set_local_testnet
