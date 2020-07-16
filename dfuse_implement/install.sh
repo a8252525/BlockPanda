@@ -31,3 +31,18 @@ else
 fi
 
 
+echo 
+echo "Install nodejs and go."
+echo
+
+apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
+curl -sL https://deb.nodesource.com/setup_12.x |  bash
+apt-get install -y nodejs
+
+npm install -g npm
+
+cd /tmp
+wget https://dl.google.com/go/go1.11.linux-amd64.tar.gz
+tar -xvf go1.11.linux-amd64.tar.gz
+mv go /usr/local
+cd
